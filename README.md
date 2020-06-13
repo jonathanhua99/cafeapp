@@ -1,6 +1,6 @@
-Some instructions for getting setup
+**Setup Instructions for Android/iOS**
 
-Android:
+<u>Android</u>:
 
 I used the following tutorial to get set up (https://www.youtube.com/watch?v=EDlywQeg5Vs, also on the Trello task), but here's a simplified version for the Android setup:
 
@@ -12,6 +12,17 @@ android emulator. Since that is me, I opted to use my old physical android (lol 
 		- Go to settings > about phone > build number, then tap build number 7 times, and this will enable the developer mode for android 
 		- Then, backtrack to the settings, then >developer options and scroll down to "USB debugging". Replug your android device via usb if the box is greyed out, and then click the checkbox for "USB debugging" 
 		- Test your connection out by opening a cmd window and typing "flutter devices". If your device shows up, you're all set 
-		
+
 3) You'll need an IDE or a good text editor, so VS Code is a great one with lots of plug ins. If you use VS Code, you can install the Flutter/Dart plugin, and it'll take care of all the formatting. Useful hotkeys are F5 to run the debugger and shift+f5 to stop it
 
+<u>iOS</u>:
+
+I used the following YouTube tutorial video to set up Flutter and related dev tools: https://www.youtube.com/watch?v=THsihXK1-14. I've summarized the setup instructions below, but follow the YouTube tutorial for an in-depth step by step guide c**.
+
+1) Install flutter SDK from website. Move to flutter directory to home directory. Open .bash_profile file and add flutter to your PATH. 
+
+2) Install VS Code to use a text editor. Add Flutter extension.
+
+3) Install Xcode, mainly to use the iOS simulator.
+
+4) To visualize on simulator, run debugger (F5) through VS Code and choose Dart&Flutter environment. Will build code and show app.
