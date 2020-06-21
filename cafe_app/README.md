@@ -1,4 +1,4 @@
-# parking_app
+# cafe_app
 
 A new Flutter project.
 
