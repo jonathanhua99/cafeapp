@@ -6,7 +6,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Cafe Finder making changes")),
+      appBar: AppBar(title: Text("Cafe Finder making changes more amends")),
       bottomNavigationBar: NavBar(),
       body: Text('profile'),
     );
