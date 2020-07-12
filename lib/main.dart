@@ -4,6 +4,7 @@ import 'package:cafe_app/screens/search_screen.dart';
 import 'package:cafe_app/screens/collections_screen.dart';
 import 'package:cafe_app/screens/forum_screen.dart';
 import 'package:cafe_app/screens/profile_screen.dart';
+import 'package:cafe_app/screens/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,13 +34,15 @@ class _TheKingScreenState extends State<TheKingScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: LoginScreen(),
+      //home: HomeScreen(),
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
         SearchScreen.id: (context) => SearchScreen(),
         ProfileScreen.id: (context) => ProfileScreen(),
         CollectionsScreen.id: (context) => CollectionsScreen(),
-        ForumScreen.id: (context) => ForumScreen()
+        ForumScreen.id: (context) => ForumScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
       },
     );
   }
