@@ -30,18 +30,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
-                Text("Please enter your email"),
-                TextFormField(onChanged: (val) {
-                  setState(() => email = val);
-                }),
-                SizedBox(height: 20.0),
-                Text("Please enter your password"),
                 TextFormField(
+                    decoration: InputDecoration(
+                      helperText: "Email",
+                    ),
+                    onChanged: (val) {
+                      setState(() => email = val);
+                    }),
+                SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: InputDecoration(
+                    helperText: "Password",
+                  ),
                   obscureText: true,
                   onChanged: (val) {
                     setState(() => password = val);
                   },
                 ),
+                Text(error, style: TextStyle(color: Colors.red)),
                 SizedBox(height: 20.0),
                 RaisedButton(
                     color: Colors.lightBlue,
@@ -59,18 +65,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     }),
                 Row(
                   children: <Widget>[
-                    RaisedButton(
-                        child: Text("Forgot password?",
-                            style: TextStyle(color: Colors.white)),
-                        onPressed: (() => print("FORGOT PASSWORD PRESSED"))),
-                    RaisedButton(
-                        child: Text("Sign up"),
-                        onPressed: (() => Navigator.pushReplacementNamed(
-                            context, CreateAccount.id))),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RaisedButton(
+                          child: Text("Sign up"),
+                          onPressed: (() => Navigator.pushReplacementNamed(
+                              context, CreateAccount.id))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RaisedButton(
+                          child: Text("Forgot password?"),
+                          onPressed: (() => print("FORGOT PASSWORD PRESSED"))),
+                    )
                   ],
                 ),
                 SizedBox(height: 20.0),
-                Text(error)
               ],
             ))));
   }
