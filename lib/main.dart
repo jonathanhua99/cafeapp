@@ -4,8 +4,8 @@ import 'package:cafe_app/screens/search_screen.dart';
 import 'package:cafe_app/screens/collections_screen.dart';
 import 'package:cafe_app/screens/forum_screen.dart';
 import 'package:cafe_app/screens/profile_screen.dart';
-import 'package:cafe_app/screens/login_screen.dart';
-import 'package:cafe_app/screens/create_account_screen.dart';
+import 'package:cafe_app/screens/loginCreate/login_screen.dart';
+import 'package:cafe_app/screens/loginCreate/create_account_screen1.dart';
 
 void main() {
   runApp(MyApp());
