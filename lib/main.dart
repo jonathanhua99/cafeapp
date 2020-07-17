@@ -1,3 +1,4 @@
+import 'package:cafe_app/screens/forgot_password_screen.dart';
 import 'package:cafe_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cafe_app/screens/search_screen.dart';
@@ -44,6 +45,7 @@ class _TheKingScreenState extends State<TheKingScreen> {
         ForumScreen.id: (context) => ForumScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         CreateAccount.id: (context) => CreateAccount(),
+        ForgotPassword.id: (context) => ForgotPassword(),
       },
     );
   }

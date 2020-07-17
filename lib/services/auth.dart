@@ -65,4 +65,10 @@ class AuthService {
       return null;
     }
   }
+
+  //reset password
+  Future sendPasswordResetEmail(String email) async {
+    // should prob check if this is a valid email in our database first
+    return _auth.sendPasswordResetEmail(email: email);
+  }
 }

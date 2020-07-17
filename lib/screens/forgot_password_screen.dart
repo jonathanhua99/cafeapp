@@ -2,7 +2,7 @@ import 'package:cafe_app/services/auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../screens/loginCreate/login_screen.dart';
+import 'loginCreate/login_screen.dart';
 
 class ForgotPassword extends StatefulWidget {
   static const String id = "forgot_password_screen";
