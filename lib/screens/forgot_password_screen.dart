@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'loginCreate/login_screen.dart';
+import 'package:email_validator/email_validator.dart';
 
 class ForgotPassword extends StatefulWidget {
   static const String id = "forgot_password_screen";
@@ -60,11 +61,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 20.0),
+                        vertical: 10.0, horizontal: 30.0),
                     child: RichText(
                       text: TextSpan(
                         text:
-                            "We just need you to enter the email you registered with and we will send" +
+                            "Just enter the email you registered with and we can send" +
                                 " you your password reset instructions!",
                         style: TextStyle(color: Colors.black, fontSize: 12.0),
                       ),
@@ -77,6 +78,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
                     child: TextFormField(
                         decoration: InputDecoration(labelText: "Email"),
+                        autocorrect: false,
                         onChanged: (val) {
                           setState(() => email = val.trim());
                         }),
@@ -93,26 +95,67 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               style: TextStyle(color: Colors.white)),
                           onPressed: () async {
                             // send email functionality
-                            await _auth.sendPasswordResetEmail(email);
-                            // await Navigator.pushReplacementNamed(context, LoginScreen.id);
-                            await showDialog(
-                                context: context,
-                                child: CupertinoAlertDialog(
-                                  title: Text("Heyooo"),
-                                  content: Text(
-                                      "An email has been sent to your email!"),
-                                  actions: <Widget>[
-                                    CupertinoDialogAction(
-                                      // isDefaultAction: false,
-                                      onPressed: (() => Navigator.of(context,
-                                              rootNavigator: true)
-                                          .pop('dialog')),
-                                      child: Text("Ok"),
-                                    )
-                                  ],
-                                ));
-                            Navigator.pushReplacementNamed(
-                                context, LoginScreen.id);
+                            var emailValidator = EmailValidator.validate(email);
+                            // dynamic validEmail = await _auth.sendPasswordResetEmail(email);
+                            if (emailValidator) {
+                              dynamic validEmail =
+                                  await _auth.checkValidUsername(email);
+                              if (!validEmail.isEmpty) {
+                                await _auth.sendPasswordResetEmail(email);
+                                await showDialog(
+                                    context: context,
+                                    child: CupertinoAlertDialog(
+                                      title: Text("Heyooo"),
+                                      content: Text(
+                                          "An email has been sent to your email!"),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                          // isDefaultAction: false,
+                                          onPressed: (() => Navigator.of(
+                                                  context,
+                                                  rootNavigator: true)
+                                              .pop('dialog')),
+                                          child: Text("Ok"),
+                                        )
+                                      ],
+                                    ));
+                                Navigator.of(context).pop();
+                              } else {
+                                await showDialog(
+                                    context: context,
+                                    child: CupertinoAlertDialog(
+                                      title: Text("Yikes!"),
+                                      content:
+                                          Text("That was an invalid email."),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                          // isDefaultAction: false,
+                                          onPressed: (() => Navigator.of(
+                                                  context,
+                                                  rootNavigator: true)
+                                              .pop('dialog')),
+                                          child: Text("Retry"),
+                                        )
+                                      ],
+                                    ));
+                              }
+                            } else {
+                              await showDialog(
+                                  context: context,
+                                  child: CupertinoAlertDialog(
+                                    title: Text("Yikes!"),
+                                    content: Text("That's not proper email format, silly."),
+                                    actions: <Widget>[
+                                      CupertinoDialogAction(
+                                        // isDefaultAction: false,
+                                        onPressed: (() => Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop('dialog')),
+                                        child: Text("Retry"),
+                                      )
+                                    ],
+                                  ));
+                            }
                           }),
                     ),
                   ),
@@ -125,8 +168,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             text: "<< Back to PositiveTEA Login Page",
                             style: TextStyle(color: Colors.blue),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () => Navigator.pushReplacementNamed(
-                                  context, LoginScreen.id)),
+                              ..onTap = () => Navigator.of(context).pop()),
                       ]),
                     ),
                   ),

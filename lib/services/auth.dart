@@ -1,5 +1,6 @@
 import 'package:cafe_app/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import '../models/user.dart';
 
 class AuthService {
@@ -69,6 +70,12 @@ class AuthService {
   //reset password
   Future sendPasswordResetEmail(String email) async {
     // should prob check if this is a valid email in our database first
-    return _auth.sendPasswordResetEmail(email: email);
+    try {
+      var result = _auth.sendPasswordResetEmail(email: email);
+      return result;
+    } catch (e) {
+      print(e,);
+      return null;
+    }
   }
 }

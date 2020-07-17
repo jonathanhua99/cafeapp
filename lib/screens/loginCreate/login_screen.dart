@@ -120,10 +120,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.blue,
                         ),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Navigator.pushReplacementNamed(
+                          ..onTap = () => Navigator.push (
                             context,
-                            ForgotPassword.id,
+                            MaterialPageRoute(builder: (context) => ForgotPassword())
                           ),
+                          // Navigator.push(
+                          //   context,
+                          //   ForgotPassword.id,
+                          // ),
                       )
                     ],
                   ),
