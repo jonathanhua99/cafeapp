@@ -1,3 +1,4 @@
+import 'package:cafe_app/screens/forgot_password_screen.dart';
 import 'package:cafe_app/screens/loginCreate/create_account_screen1.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -119,9 +120,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.blue,
                         ),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => print(
-                                "go to forgot password screen",
-                              ),
+                          ..onTap = () => Navigator.push (
+                            context,
+                            MaterialPageRoute(builder: (context) => ForgotPassword())
+                          ),
+                          // Navigator.push(
+                          //   context,
+                          //   ForgotPassword.id,
+                          // ),
                       )
                     ],
                   ),
