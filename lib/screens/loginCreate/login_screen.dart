@@ -11,8 +11,23 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   final AuthService _auth = AuthService();
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = new AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 350,
+      ),
+    );
+    _animationController.forward();
+    super.initState();
+  }
+
   String email;
   String password;
   String error = "";
@@ -20,173 +35,251 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Login",
-        ),
-        backgroundColor: Colors.lightBlue,
-      ),
       body: new GestureDetector(
         onTap: () {
-          FocusScope.of(
-            context,
-          ).requestFocus(
-            new FocusNode(),
-          );
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
         },
         child: Container(
-          color: Colors.white,
-          padding: EdgeInsets.symmetric(
-            vertical: 20.0,
-            horizontal: 50.0,
-          ),
-          child: Form(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                    decoration: InputDecoration(
-                      helperText: "Email",
-                    ),
-                    onChanged: (val) {
-                      setState(
-                        () => email = val,
-                      );
-                    }),
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    helperText: "Password",
-                  ),
-                  obscureText: true,
-                  onChanged: (val) {
-                    setState(
-                      () => password = val,
-                    );
-                  },
-                ),
-                Text(
-                  error,
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                ButtonTheme(
-                  minWidth: 400.0,
-                  height: 40.0,
-                  child: RaisedButton(
-                      color: Colors.lightBlue,
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () async {
-                        dynamic result = await _auth.signInExistingUser(
-                          email,
-                          password,
-                        );
-                        if (result == null) {
-                          setState(
-                            () => error = "Invalid user info. Try again.",
-                          );
-                        } else {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            HomeScreen.id,
-                          );
-                        }
-                      }),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.0,
-                  ),
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: "Forgot your password?",
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Navigator.push (
-                            context,
-                            MaterialPageRoute(builder: (context) => ForgotPassword())
-                          ),
-                          // Navigator.push(
-                          //   context,
-                          //   ForgotPassword.id,
-                          // ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(
-                    8.0,
-                  ),
-                  child: new Container(
-                    margin: const EdgeInsets.only(
-                      left: 5,
-                      right: 5,
-                    ),
-                    child: Divider(
-                      color: Colors.black,
-                      height: 36,
-                    ),
-                  ),
-                ),
-/*                   FlatButton(
-                      child: Text("Don't have an account? Sign up here."),
-                      onPressed: (() => Navigator.pushReplacementNamed(
-                          context, CreateAccount.id))), */
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: "Don't have an account? ",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      TextSpan(
-                        text: "Sign up here.",
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CreateAccount(),
-                                ),
-                              ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.0,
-                  ),
-                ),
-/*                  FlatButton(
-                      child: Text("Forgot password?",
-                          style: TextStyle(color: Colors.blue)),
-                      onPressed: (() => print("FORGOT PASSWORD PRESSED"))), */
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              colors: [
+                Colors.blue[700],
+                Colors.blue[300],
+                Colors.blue[100],
               ],
             ),
+          ),
+          child: Flex(
+            direction: Axis.vertical,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 40),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 15.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SlideTransition(
+                      position: Tween<Offset>(
+                        begin: Offset(
+                          0,
+                          //MediaQuery.of(context).size.width,
+                          -1,
+                        ),
+                        end: Offset.zero,
+                      ).animate(
+                        _animationController,
+                      ),
+                      child: FadeTransition(
+                        opacity: _animationController,
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                height: 250,
+                child: FadeTransition(
+                  opacity: _animationController,
+                  child: Image.asset(
+                    'assets/images/edited_boba.png',
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(60),
+                      topRight: Radius.circular(60),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 20),
+                        Container(
+                          //padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(50, 150, 255, .5),
+                                blurRadius: 20,
+                                offset: Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(
+                                  left: 15,
+                                  right: 15,
+                                  top: 8,
+                                  bottom: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.blue[100],
+                                    ),
+                                  ),
+                                ),
+                                child: TextFormField(
+                                  onFieldSubmitted: (_) =>
+                                      FocusScope.of(context).nextFocus(),
+                                  textInputAction: TextInputAction.next,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Email or Phone Number",
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(
+                                      () => email = value.trim(),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                  left: 15,
+                                  right: 15,
+                                  top: 8,
+                                  bottom: 8,
+                                ),
+                                child: TextFormField(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    obscureText: true,
+                                    onChanged: (value) {
+                                      setState(
+                                        () => password = value,
+                                      );
+                                    }),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          error,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        SizedBox(height: 25),
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: "Forgot your password?",
+                                style: TextStyle(color: Colors.blue),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ForgotPassword(),
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 25),
+                        ButtonTheme(
+                          minWidth: 200,
+                          height: 50,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                40,
+                              ),
+                            ),
+                            color: Colors.lightBlue,
+                            child: Text(
+                              "Sign in",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () async {
+                              dynamic result = await _auth.signInExistingUser(
+                                email,
+                                password,
+                              );
+                              if (result == null) {
+                                setState(() => error = "Invalid user info.");
+                              } else {
+                                Navigator.pushReplacementNamed(
+                                    context, HomeScreen.id);
+                              }
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 25.0,
+                            bottom: 25.0,
+                            left: 8.0,
+                            right: 8.0,
+                          ),
+                          child: Divider(
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: "Don't have an account? ",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              TextSpan(
+                                text: "Sign up here.",
+                                style: TextStyle(color: Colors.blue),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => (Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => CreateAccount(),
+                                        ),
+                                      )),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

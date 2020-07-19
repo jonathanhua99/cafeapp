@@ -1,6 +1,5 @@
 import 'package:cafe_app/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import '../models/user.dart';
 
 class AuthService {
@@ -74,7 +73,9 @@ class AuthService {
       var result = _auth.sendPasswordResetEmail(email: email);
       return result;
     } catch (e) {
-      print(e,);
+      print(
+        e,
+      );
       return null;
     }
   }

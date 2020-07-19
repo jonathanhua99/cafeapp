@@ -2,7 +2,6 @@ import 'package:cafe_app/services/auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'loginCreate/login_screen.dart';
 import 'package:email_validator/email_validator.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -144,7 +143,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   context: context,
                                   child: CupertinoAlertDialog(
                                     title: Text("Yikes!"),
-                                    content: Text("That's not proper email format, silly."),
+                                    content: Text(
+                                        "That's not proper email format, silly."),
                                     actions: <Widget>[
                                       CupertinoDialogAction(
                                         // isDefaultAction: false,
