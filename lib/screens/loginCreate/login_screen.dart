@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen>
     _animationController = new AnimationController(
       vsync: this,
       duration: Duration(
-        milliseconds: 350,
+        milliseconds: 500,
       ),
     );
     _animationController.forward();
@@ -111,171 +111,188 @@ class _LoginScreenState extends State<LoginScreen>
                       topRight: Radius.circular(60),
                     ),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 20),
-                        Container(
-                          //padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromRGBO(50, 150, 255, .5),
-                                blurRadius: 20,
-                                offset: Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(
-                                  left: 15,
-                                  right: 15,
-                                  top: 8,
-                                  bottom: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.blue[100],
-                                    ),
-                                  ),
-                                ),
-                                child: TextFormField(
-                                  onFieldSubmitted: (_) =>
-                                      FocusScope.of(context).nextFocus(),
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Email or Phone Number",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  onChanged: (value) {
-                                    setState(
-                                      () => email = value.trim(),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(
-                                  left: 15,
-                                  right: 15,
-                                  top: 8,
-                                  bottom: 8,
-                                ),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "Password",
-                                      hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                    obscureText: true,
-                                    onChanged: (value) {
-                                      setState(
-                                        () => password = value,
-                                      );
-                                    }),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          error,
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        SizedBox(height: 25),
-                        RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: "Forgot your password?",
-                                style: TextStyle(color: Colors.blue),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ForgotPassword(),
-                                        ),
-                                      ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 25),
-                        ButtonTheme(
-                          minWidth: 200,
-                          height: 50,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                40,
-                              ),
-                            ),
-                            color: Colors.lightBlue,
-                            child: Text(
-                              "Sign in",
-                              style: TextStyle(
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset(
+                        0,
+                        .25,
+                      ),
+                      end: Offset.zero,
+                    ).animate(
+                      _animationController,
+                    ),
+                    child: FadeTransition(
+                      opacity: _animationController,
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            Container(
+                              //padding: EdgeInsets.all(20),
+                              decoration: BoxDecoration(
                                 color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(50, 150, 255, .5),
+                                    blurRadius: 20,
+                                    offset: Offset(0, 10),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      left: 15,
+                                      right: 15,
+                                      top: 8,
+                                      bottom: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.blue[100],
+                                        ),
+                                      ),
+                                    ),
+                                    child: TextFormField(
+                                      onFieldSubmitted: (_) =>
+                                          FocusScope.of(context).nextFocus(),
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Email or Phone Number",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      onChanged: (value) {
+                                        setState(
+                                          () => email = value.trim(),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      left: 15,
+                                      right: 15,
+                                      top: 8,
+                                      bottom: 8,
+                                    ),
+                                    child: TextFormField(
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "Password",
+                                          hintStyle: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        obscureText: true,
+                                        onChanged: (value) {
+                                          setState(
+                                            () => password = value,
+                                          );
+                                        }),
+                                  ),
+                                ],
                               ),
                             ),
-                            onPressed: () async {
-                              dynamic result = await _auth.signInExistingUser(
-                                email,
-                                password,
-                              );
-                              if (result == null) {
-                                setState(() => error = "Invalid user info.");
-                              } else {
-                                Navigator.pushReplacementNamed(
-                                    context, HomeScreen.id);
-                              }
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 25.0,
-                            bottom: 25.0,
-                            left: 8.0,
-                            right: 8.0,
-                          ),
-                          child: Divider(
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: "Don't have an account? ",
-                                style: TextStyle(color: Colors.black),
+                            SizedBox(height: 5),
+                            Text(
+                              error,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            SizedBox(height: 25),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: "Forgot your password?",
+                                    style: TextStyle(color: Colors.blue),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ForgotPassword(),
+                                            ),
+                                          ),
+                                  ),
+                                ],
                               ),
-                              TextSpan(
-                                text: "Sign up here.",
-                                style: TextStyle(color: Colors.blue),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () => (Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => CreateAccount(),
-                                        ),
-                                      )),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                            ),
+                            SizedBox(height: 25),
+                            ButtonTheme(
+                              minWidth: 200,
+                              height: 50,
+                              child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    40,
+                                  ),
+                                ),
+                                color: Colors.lightBlue,
+                                child: Text(
+                                  "Sign in",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  dynamic result =
+                                      await _auth.signInExistingUser(
+                                    email,
+                                    password,
+                                  );
+                                  if (result == null) {
+                                    setState(
+                                        () => error = "Invalid user info.");
+                                  } else {
+                                    Navigator.pushReplacementNamed(
+                                        context, HomeScreen.id);
+                                  }
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 25.0,
+                                bottom: 25.0,
+                                left: 8.0,
+                                right: 8.0,
+                              ),
+                              child: Divider(
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: "Don't have an account? ",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  TextSpan(
+                                    text: "Sign up here.",
+                                    style: TextStyle(color: Colors.blue),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => (Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CreateAccount(),
+                                            ),
+                                          )),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
